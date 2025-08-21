@@ -1,71 +1,72 @@
-import { useState } from 'react';
-import { FusionSidebar } from '@/components/fusion-sidebar';
-import { InboxList } from '@/components/inbox-list';
-import { MessageThread } from '@/components/message-thread';
-import { mockThreads } from '@/data/mock-data';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
-  const [activeChannel, setActiveChannel] = useState('gmail');
-  const [activeThread, setActiveThread] = useState<string | null>(null);
-
-  const currentThreads = mockThreads[activeChannel as keyof typeof mockThreads] || [];
-  const selectedThread = activeThread 
-    ? currentThreads.find(thread => thread.id === activeThread)
-    : null;
-
-  const handleChannelChange = (channelId: string) => {
-    setActiveChannel(channelId);
-    setActiveThread(null); // Reset thread selection when changing channels
-  };
-
-  const handleThreadSelect = (threadId: string) => {
-    setActiveThread(threadId);
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="h-screen flex bg-background">
-      {/* Sidebar */}
-      <FusionSidebar 
-        activeChannel={activeChannel}
-        onChannelChange={handleChannelChange}
-      />
-      
-      {/* Main Content */}
-      <div className="flex-1 flex">
-        {/* Inbox List */}
-        <div className="w-96 border-r border-border">
-          <InboxList
-            threads={currentThreads}
-            activeThread={activeThread}
-            onThreadSelect={handleThreadSelect}
-            channelType={activeChannel}
-          />
-        </div>
-        
-        {/* Message Thread */}
-        <div className="flex-1">
-          {selectedThread ? (
-            <MessageThread thread={selectedThread} />
-          ) : (
-            <div className="flex items-center justify-center h-full bg-gradient-card">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 gradient-primary rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl text-primary-foreground font-bold">F</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Welcome to Fusion</h3>
-                  <p className="text-muted-foreground max-w-md">
-                    Your unified messaging hub. Select a conversation from the {activeChannel} inbox to get started.
-                  </p>
-                </div>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>🔒 End-to-end encrypted</p>
-                  <p>🔍 Smart search & filtering</p>
-                  <p>🎯 Priority-based organization</p>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
+      <div className="container mx-auto px-4 py-20">
+        <div className="text-center space-y-8 max-w-4xl mx-auto">
+          <div className="w-24 h-24 gradient-primary rounded-3xl flex items-center justify-center mx-auto">
+            <span className="text-4xl text-primary-foreground font-bold">F</span>
+          </div>
+          
+          <div className="space-y-4">
+            <h1 className="text-6xl font-bold text-foreground">
+              Unify Your Messages
+            </h1>
+            <h2 className="text-4xl font-light text-muted-foreground">
+              Never Miss a Beat
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Fusion brings all your messaging channels into one beautiful, unified inbox. 
+              Gmail, Slack, WhatsApp, Instagram - all in perfect harmony.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-4 h-14"
+              onClick={() => navigate('/auth')}
+            >
+              Get Started Free
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-lg px-8 py-4 h-14"
+              onClick={() => navigate('/dashboard')}
+            >
+              View Demo
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                <span className="w-3 h-3 bg-success rounded-full"></span>
               </div>
+              <h3 className="text-lg font-semibold">End-to-End Encrypted</h3>
+              <p className="text-muted-foreground">Your privacy is paramount</p>
             </div>
-          )}
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                <span className="w-3 h-3 bg-primary rounded-full"></span>
+              </div>
+              <h3 className="text-lg font-semibold">Smart Organization</h3>
+              <p className="text-muted-foreground">AI-powered priority sorting</p>
+            </div>
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto">
+                <span className="w-3 h-3 bg-accent rounded-full"></span>
+              </div>
+              <h3 className="text-lg font-semibold">Universal Search</h3>
+              <p className="text-muted-foreground">Find anything, anywhere</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

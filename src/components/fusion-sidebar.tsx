@@ -18,6 +18,7 @@ interface Channel {
 interface FusionSidebarProps {
   activeChannel: string;
   onChannelChange: (channelId: string) => void;
+  user?: any;
 }
 
 const channels: Channel[] = [
@@ -59,7 +60,7 @@ const channels: Channel[] = [
   }
 ];
 
-export function FusionSidebar({ activeChannel, onChannelChange }: FusionSidebarProps) {
+export function FusionSidebar({ activeChannel, onChannelChange, user }: FusionSidebarProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const getChannelColorClass = (type: Channel['type']) => {
