@@ -11,7 +11,7 @@ export const mockThreads = {
       timestamp: '2024-01-10T10:30:00Z',
       unreadCount: 2,
       priority: 'high' as const,
-      tags: ['Budget', 'Meeting', 'Q4'],
+      tags: ['Meeting', 'Project'],
       isRead: false,
       channel: 'Gmail',
       messages: [
@@ -22,7 +22,7 @@ export const mockThreads = {
           timestamp: '2 hours ago',
           isRead: true,
           priority: 'high' as const,
-          tags: ['Budget', 'Q4']
+          tags: ['Project']
         },
         {
           id: 'msg-2',
@@ -40,7 +40,7 @@ export const mockThreads = {
           timestamp: '30 minutes ago',
           isRead: false,
           priority: 'high' as const,
-          tags: ['Budget']
+          tags: ['Meeting']
         }
       ]
     },
@@ -53,7 +53,7 @@ export const mockThreads = {
       timestamp: '2024-01-09T15:45:00Z',
       unreadCount: 0,
       priority: 'medium' as const,
-      tags: ['Product', 'Launch'],
+      tags: ['Project'],
       isRead: true,
       channel: 'Gmail',
       messages: [
@@ -64,7 +64,7 @@ export const mockThreads = {
           timestamp: 'Yesterday at 3:45 PM',
           isRead: true,
           priority: 'medium' as const,
-          tags: ['Product', 'Strategy']
+          tags: ['Project']
         },
         {
           id: 'msg-5',
@@ -73,7 +73,7 @@ export const mockThreads = {
           timestamp: 'Yesterday at 4:20 PM',
           isRead: true,
           priority: 'medium' as const,
-          tags: ['Launch']
+          tags: ['Project']
         }
       ]
     },
@@ -86,7 +86,7 @@ export const mockThreads = {
       timestamp: '2024-01-08T09:00:00Z',
       unreadCount: 1,
       priority: 'high' as const,
-      tags: ['Security', 'Urgent'],
+      tags: ['Urgent'],
       isRead: false,
       channel: 'Gmail',
       messages: [
@@ -97,7 +97,7 @@ export const mockThreads = {
           timestamp: '2 days ago',
           isRead: false,
           priority: 'high' as const,
-          tags: ['Security', 'Urgent']
+          tags: ['Urgent']
         }
       ]
     }
@@ -112,7 +112,7 @@ export const mockThreads = {
       timestamp: '2024-01-10T11:15:00Z',
       unreadCount: 3,
       priority: 'medium' as const,
-      tags: ['Design', 'Components'],
+      tags: ['Project'],
       isRead: false,
       channel: 'Slack',
       messages: [
@@ -123,7 +123,7 @@ export const mockThreads = {
           timestamp: '1 hour ago',
           isRead: true,
           priority: 'medium' as const,
-          tags: ['Design', 'Accessibility']
+          tags: ['Project']
         },
         {
           id: 'msg-8',
@@ -132,7 +132,7 @@ export const mockThreads = {
           timestamp: '45 minutes ago',
           isRead: true,
           priority: 'medium' as const,
-          tags: ['Testing']
+          tags: ['Project']
         },
         {
           id: 'msg-9',
@@ -141,7 +141,7 @@ export const mockThreads = {
           timestamp: '30 minutes ago',
           isRead: false,
           priority: 'medium' as const,
-          tags: ['Components']
+          tags: ['Project']
         }
       ]
     },
@@ -154,7 +154,7 @@ export const mockThreads = {
       timestamp: '2024-01-10T08:30:00Z',
       unreadCount: 0,
       priority: 'low' as const,
-      tags: ['Deployment', 'Success'],
+      tags: ['Project'],
       isRead: true,
       channel: 'Slack',
       messages: [
@@ -165,7 +165,7 @@ export const mockThreads = {
           timestamp: '4 hours ago',
           isRead: true,
           priority: 'low' as const,
-          tags: ['Deployment']
+          tags: ['Project']
         },
         {
           id: 'msg-11',
@@ -174,7 +174,7 @@ export const mockThreads = {
           timestamp: '4 hours ago',
           isRead: true,
           priority: 'low' as const,
-          tags: ['Success']
+          tags: ['Project']
         }
       ]
     }
@@ -189,7 +189,7 @@ export const mockThreads = {
       timestamp: '2024-01-10T12:00:00Z',
       unreadCount: 5,
       priority: 'low' as const,
-      tags: ['Family'],
+      tags: [],
       isRead: false,
       channel: 'WhatsApp',
       messages: [
@@ -200,7 +200,7 @@ export const mockThreads = {
           timestamp: '2 hours ago',
           isRead: true,
           priority: 'low' as const,
-          tags: ['Family']
+          tags: []
         },
         {
           id: 'msg-13',
@@ -209,7 +209,7 @@ export const mockThreads = {
           timestamp: '1 hour ago',
           isRead: true,
           priority: 'low' as const,
-          tags: ['Family']
+          tags: []
         },
         {
           id: 'msg-14',
@@ -218,7 +218,7 @@ export const mockThreads = {
           timestamp: '30 minutes ago',
           isRead: false,
           priority: 'low' as const,
-          tags: ['Family']
+          tags: []
         }
       ]
     },
@@ -231,7 +231,7 @@ export const mockThreads = {
       timestamp: '2024-01-09T16:20:00Z',
       unreadCount: 1,
       priority: 'high' as const,
-      tags: ['Client', 'Work'],
+      tags: ['Client'],
       isRead: false,
       channel: 'WhatsApp',
       messages: [
@@ -251,7 +251,7 @@ export const mockThreads = {
           timestamp: 'Yesterday at 4:20 PM',
           isRead: false,
           priority: 'high' as const,
-          tags: ['Work']
+          tags: ['Client']
         }
       ]
     }
@@ -266,7 +266,7 @@ export const mockThreads = {
       timestamp: '2024-01-10T09:45:00Z',
       unreadCount: 2,
       priority: 'medium' as const,
-      tags: ['Collaboration', 'Marketing'],
+      tags: ['Client'],
       isRead: false,
       channel: 'Instagram',
       messages: [
@@ -277,7 +277,7 @@ export const mockThreads = {
           timestamp: '3 hours ago',
           isRead: false,
           priority: 'medium' as const,
-          tags: ['Collaboration', 'Marketing']
+          tags: ['Client']
         }
       ]
     },
@@ -290,7 +290,7 @@ export const mockThreads = {
       timestamp: '2024-01-09T14:30:00Z',
       unreadCount: 0,
       priority: 'low' as const,
-      tags: ['Customer', 'Sales'],
+      tags: ['Client'],
       isRead: true,
       channel: 'Instagram',
       messages: [
@@ -301,7 +301,7 @@ export const mockThreads = {
           timestamp: 'Yesterday at 2:30 PM',
           isRead: true,
           priority: 'low' as const,
-          tags: ['Customer', 'Sales']
+          tags: ['Client']
         }
       ]
     }

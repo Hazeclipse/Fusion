@@ -6,11 +6,15 @@ import { MessageThread } from '@/components/message-thread';
 import { mockThreads } from '@/data/mock-data';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
   const [activeChannel, setActiveChannel] = useState('gmail');
   const [activeThread, setActiveThread] = useState<string | null>(null);
+  const [globalSearch, setGlobalSearch] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,56 +59,77 @@ const Dashboard = () => {
 
   return (
     <div className="h-screen flex bg-background">
-      <FusionSidebar 
-        activeChannel={activeChannel}
-        onChannelChange={handleChannelChange}
-        user={user}
-      />
+      {user && (
+        <FusionSidebar 
+          activeChannel={activeChannel}
+          onChannelChange={handleChannelChange}
+          user={user}
+        />
+      )}
       
-      <div className="flex-1 flex">
-        <div className="w-96 border-r border-border">
-          <InboxList
-            threads={currentThreads}
-            activeThread={activeThread}
-            onThreadSelect={handleThreadSelect}
-            channelType={activeChannel}
-          />
+      <div className="flex-1 flex flex-col">
+        {/* Global Search Bar - Centered */}
+        <div className="h-16 border-b border-border bg-card/50 backdrop-blur-sm flex items-center justify-center px-6 shadow-sm shadow-primary/10">
+          <div className="w-full max-w-md">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search across all messages..."
+                value={globalSearch}
+                onChange={(e) => setGlobalSearch(e.target.value)}
+                className="pl-9 bg-background/50 border-border/50 focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all"
+              />
+            </div>
+          </div>
         </div>
         
-        <div className="flex-1">
-          {selectedThread ? (
-            <MessageThread thread={selectedThread} />
-          ) : (
-            <div className="flex items-center justify-center h-full bg-gradient-card">
-              <div className="text-center space-y-6 max-w-md">
-                <div className="w-20 h-20 gradient-primary rounded-3xl flex items-center justify-center mx-auto">
-                  <span className="text-3xl text-primary-foreground font-bold">F</span>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-foreground mb-3">
-                    Your inboxes, unified and stress-free
-                  </h3>
-                  <p className="text-muted-foreground text-lg">
-                    Select a conversation from your {activeChannel} inbox to get started.
-                  </p>
-                </div>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <p className="flex items-center justify-center gap-2">
-                    <span className="w-2 h-2 bg-success rounded-full"></span>
-                    End-to-end encrypted
-                  </p>
-                  <p className="flex items-center justify-center gap-2">
-                    <span className="w-2 h-2 bg-primary rounded-full"></span>
-                    Smart search & filtering
-                  </p>
-                  <p className="flex items-center justify-center gap-2">
-                    <span className="w-2 h-2 bg-accent rounded-full"></span>
-                    Priority-based organization
-                  </p>
+        <div className="flex-1 flex">
+          <div className="w-96 border-r border-border">
+            <ErrorBoundary>
+              <InboxList
+                threads={currentThreads}
+                activeThread={activeThread}
+                onThreadSelect={handleThreadSelect}
+                channelType={activeChannel}
+              />
+            </ErrorBoundary>
+          </div>
+          
+          <div className="flex-1">
+            {selectedThread ? (
+              <MessageThread thread={selectedThread} />
+            ) : (
+              <div className="flex items-center justify-center h-full gradient-card">
+                <div className="text-center space-y-6 max-w-md">
+                  <div className="w-20 h-20 gradient-primary rounded-3xl flex items-center justify-center mx-auto">
+                    <span className="text-3xl text-primary-foreground font-bold">F</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-foreground mb-3">
+                      Your inboxes, unified and stress-free
+                    </h3>
+                    <p className="text-muted-foreground text-lg">
+                      Select a conversation from your {activeChannel} inbox to get started.
+                    </p>
+                  </div>
+                  <div className="space-y-3 text-sm text-muted-foreground">
+                    <p className="flex items-center justify-center gap-2">
+                      <span className="w-2 h-2 bg-success rounded-full"></span>
+                      End-to-end encrypted
+                    </p>
+                    <p className="flex items-center justify-center gap-2">
+                      <span className="w-2 h-2 bg-primary rounded-full"></span>
+                      Smart search & filtering
+                    </p>
+                    <p className="flex items-center justify-center gap-2">
+                      <span className="w-2 h-2 bg-accent rounded-full"></span>
+                      Priority-based organization
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

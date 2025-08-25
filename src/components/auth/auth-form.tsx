@@ -7,13 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { Mail, Eye, EyeOff, Sparkles, ArrowLeft } from 'lucide-react';
 
 export function AuthForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [bypassVerification, setBypassVerification] = useState(true); // Default to true for development
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -45,10 +46,32 @@ export function AuthForm() {
           });
         }
       } else {
-        toast({
-          title: "Welcome to Fusion! 🎉",
-          description: "Check your email for verification, then we'll get you set up.",
-        });
+        if (bypassVerification) {
+          // Try to sign in immediately after signup (bypasses email verification)
+          const { error: signInError } = await supabase.auth.signInWithPassword({
+            email,
+            password
+          });
+
+          if (signInError) {
+            toast({
+              title: "Account created! 🎉",
+              description: "Please check your email for verification, then sign in.",
+            });
+          } else {
+            toast({
+              title: "Welcome to Fusion! 🎉",
+              description: "Your account has been created and you're signed in!",
+            });
+            // Go directly to dashboard/inbox instead of onboarding
+            navigate('/dashboard');
+          }
+        } else {
+          toast({
+            title: "Account created! 🎉",
+            description: "Please check your email for verification, then sign in.",
+          });
+        }
       }
     } catch (error) {
       toast({
@@ -78,7 +101,8 @@ export function AuthForm() {
           variant: "destructive"
         });
       } else {
-        navigate('/onboarding');
+        // Go directly to dashboard/inbox instead of onboarding
+        navigate('/dashboard');
       }
     } catch (error) {
       toast({
@@ -97,7 +121,7 @@ export function AuthForm() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/onboarding`
+          redirectTo: `${window.location.origin}/dashboard`
         }
       });
       
@@ -121,6 +145,16 @@ export function AuthForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
+      {/* Back Button */}
+      <Button
+        variant="ghost"
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Home
+      </Button>
+      
       <div className="w-full max-w-md space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
@@ -233,6 +267,36 @@ export function AuthForm() {
                       </Button>
                     </div>
                   </div>
+                  
+                  {/* Development mode toggles */}
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="bypass-verification"
+                        checked={bypassVerification}
+                        onChange={(e) => setBypassVerification(e.target.checked)}
+                        className="rounded border-gray-300"
+                      />
+                      <Label htmlFor="bypass-verification" className="text-sm text-muted-foreground">
+                        Skip email verification (development mode)
+                      </Label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="skip-onboarding"
+                        checked={true}
+                        onChange={() => {}}
+                        className="rounded border-gray-300"
+                      />
+                      <Label htmlFor="skip-onboarding" className="text-sm text-muted-foreground">
+                        Skip onboarding, go directly to inbox
+                      </Label>
+                    </div>
+                  </div>
+                  
                   <Button type="submit" className="w-full h-11" disabled={isLoading}>
                     {isLoading ? "Creating account..." : "Create Account"}
                   </Button>
